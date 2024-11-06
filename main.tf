@@ -1,12 +1,15 @@
+# main.tf
 resource "aws_security_group" "sg" {
-  provider = aws.project
-  count       = length(var.sg_config) > 0 ? length(var.sg_config) : 0
-  name        = join("-", tolist([var.client, var.project, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))
-  description = var.sg_config[count.index].description
-  vpc_id      = var.sg_config[count.index].vpc_id
+  provider    = aws.project
+  for_each    = {
+    for sg in var.sg_config : "${sg.application_id}-${sg.service}" => sg
+  }
+  name        = join("-", tolist([var.client, var.project, var.environment, "sg", each.value.application_id, each.value.service ]))
+  description = each.value.description
+  vpc_id      = each.value.vpc_id
 
   dynamic "ingress" {
-    for_each = var.sg_config[count.index].ingress
+    for_each = each.value.ingress
     content {
       from_port       = ingress.value["from_port"]
       to_port         = ingress.value["to_port"]
@@ -20,7 +23,7 @@ resource "aws_security_group" "sg" {
   }
 
   dynamic "egress" {
-    for_each = var.sg_config[count.index].egress
+    for_each = each.value.egress
     content {
       from_port       = egress.value["from_port"]
       to_port         = egress.value["to_port"]
@@ -32,6 +35,9 @@ resource "aws_security_group" "sg" {
   }
 
   tags = merge(
-    { Name = "${join("-", tolist([var.client, var.project, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))}" }
+    { 
+      Name = join("-", tolist([var.client, var.project, var.environment, "sg", each.value.application_id, each.value.service])) 
+    }
   )
 }
+
