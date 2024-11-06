@@ -6,6 +6,10 @@ variable "environment" {
   type = string
 }
 
+variable "project" {
+    description = "Nombre de Projecto"
+    type = string
+}
 
 variable "sg_config" {
   type = list(object({
@@ -34,3 +38,4 @@ variable "sg_config" {
     }))
   }))
 }
+
