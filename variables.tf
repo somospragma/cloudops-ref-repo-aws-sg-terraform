@@ -24,10 +24,9 @@ variable "sg_config" {
       cidr_blocks = list(string)
       prefix_list_ids = list(string)
       security_groups = list(string)
+      self = bool
       description = string
-      
     }))
-
     egress = list(object({
       from_port   = string
       to_port     = string
@@ -38,4 +37,3 @@ variable "sg_config" {
     }))
   }))
 }
-
