@@ -1,7 +1,6 @@
 resource "aws_security_group" "sg" {
-  provider = aws.project
   count       = length(var.sg_config) > 0 ? length(var.sg_config) : 0
-  name        = join("-", tolist([var.client, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))
+  name        = join("-", tolist([var.client, var.project, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))
   description = var.sg_config[count.index].description
   vpc_id      = var.sg_config[count.index].vpc_id
 
@@ -14,6 +13,7 @@ resource "aws_security_group" "sg" {
       cidr_blocks     = ingress.value["cidr_blocks"]
       security_groups = ingress.value["security_groups"]
       prefix_list_ids = ingress.value["prefix_list_ids"]
+      self            = ingress.value["self"]
       description     = ingress.value["description"]
     }
   }
@@ -30,7 +30,7 @@ resource "aws_security_group" "sg" {
     }
   }
 
-
   tags = merge(
-  { Name = "${join("-", tolist([var.client, var.project, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))}" })
+    { Name = "${join("-", tolist([var.client, var.project, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))}" }
+  )
 }
