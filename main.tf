@@ -1,4 +1,5 @@
 resource "aws_security_group" "sg" {
+  provider = aws.project
   count       = length(var.sg_config) > 0 ? length(var.sg_config) : 0
   name        = join("-", tolist([var.client, var.project, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))
   description = var.sg_config[count.index].description
