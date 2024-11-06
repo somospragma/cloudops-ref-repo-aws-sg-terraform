@@ -32,5 +32,5 @@ resource "aws_security_group" "sg" {
 
 
   tags = merge(
-  { Name = "${join("-", tolist([var.client, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))}" })
+  { Name = "${join("-", tolist([var.client, var.project, var.environment, "sg", var.sg_config[count.index].application_id, var.sg_config[count.index].service, count.index + 1]))}" })
 }
