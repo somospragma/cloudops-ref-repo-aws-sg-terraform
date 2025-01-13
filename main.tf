@@ -2,9 +2,9 @@
 resource "aws_security_group" "sg" {
   provider    = aws.project
   for_each    = {
-    for sg in var.sg_config : "${sg.application_id}-${sg.service}" => sg
+    for sg in var.sg_config : "${sg.application}" => sg
   }
-  name        = join("-", tolist([var.client, var.project, var.environment, "sg", each.value.application_id, each.value.service ]))
+  name        = join("-", tolist([var.client, var.project, var.environment, "sg", each.value.application]))
   description = each.value.description
   vpc_id      = each.value.vpc_id
 
@@ -36,8 +36,7 @@ resource "aws_security_group" "sg" {
 
   tags = merge(
     { 
-      Name = join("-", tolist([var.client, var.project, var.environment, "sg", each.value.application_id, each.value.service])) 
+      Name = join("-", tolist([var.client, var.project, var.environment, "sg", each.value.application])) 
     }
   )
 }
-

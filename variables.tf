@@ -15,8 +15,7 @@ variable "sg_config" {
   type = list(object({
     description = string
     vpc_id      = string
-    application_id = string
-    service = string
+    application = string
     ingress = list(object({
       from_port   = string
       to_port     = string
