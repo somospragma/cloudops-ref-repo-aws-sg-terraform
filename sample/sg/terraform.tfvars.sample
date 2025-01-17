@@ -1,0 +1,54 @@
+###########################################
+########## Common variables ###############
+###########################################
+
+profile     = "profile01"
+aws_region  = "us-east-1"
+environment = "dev"
+client      = "cliente01"
+project     = "proyecto01"
+common_tags = {
+  environment   = "dev"
+  project-name  = "proyecto01"
+  cost-center   = "xxx"
+  owner         = "xxx"
+  area          = "xxx"
+  provisioned   = "xxx"
+  datatype      = "xxx"
+}
+
+###########################################
+##### VPC Security Groups variables #######
+###########################################
+
+sg_config = [
+  {
+    application = "sm"
+    description = "Security group for VPC Endpoint"
+    vpc_id      = module.vpc.vpc_id
+
+    ingress = [
+      {
+        from_port       = 443
+        to_port         = 443
+        protocol        = "tcp"
+        cidr_blocks     = ["0.0.0.0/0"]
+        security_groups = []
+        prefix_list_ids = []
+        self            = false
+        description     = "Allow HTTPS inbound"
+      }
+    ]
+
+    egress = [
+      {
+        from_port       = 0
+        to_port         = 0
+        protocol        = "-1"
+        cidr_blocks     = ["0.0.0.0/0"]
+        prefix_list_ids = []
+        description     = "Allow all outbound traffic"
+      }
+    ]
+  }
+]
