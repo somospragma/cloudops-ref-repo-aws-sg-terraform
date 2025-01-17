@@ -1,4 +1,7 @@
-# main.tf
+###########################################
+####### Security Group Resources ##########
+###########################################
+
 resource "aws_security_group" "sg" {
   provider    = aws.project
   for_each    = {
