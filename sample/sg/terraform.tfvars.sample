@@ -24,7 +24,8 @@ common_tags = {
 sg_config = [
   {
     service     = "alb"
-    application = "sm"
+    application = "web01"
+    functionality = "cache"
     description = "Security group for VPC Endpoint"
     vpc_id      = module.vpc.vpc_id
 
