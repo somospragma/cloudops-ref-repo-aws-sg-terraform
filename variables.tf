@@ -27,6 +27,7 @@ variable "sg_config" {
     vpc_id      = string
     service     = string
     application = string
+    functionality = optional(string)
     ingress = list(object({
       from_port       = string
       to_port         = string
@@ -51,6 +52,7 @@ variable "sg_config" {
     - vpc_id: (string) VPC ID. Defaults to the region's default VPC.
     - service: (string) AWS Service (ecs - alb - rds)
     - application: (string) Application name in order to name security group.
+    - functionality: (optional, string) Functionality name
     - ingress:
       - description: (string) Description of this ingress rule.
       - from_port: (string) Start port (or ICMP type number if protocol is icmp or icmpv6).

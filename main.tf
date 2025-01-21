@@ -5,9 +5,9 @@
 resource "aws_security_group" "sg" {
   provider    = aws.project
   for_each    = {
-    for sg in var.sg_config : "${sg.service}-${sg.application}" => sg
+    for sg in var.sg_config : "${sg.service}-${sg.application}-${sg.functionality}" => sg
   }
-  name        = join("-", tolist([var.client, var.project, var.environment, "sg", each.value.service, each.value.application]))
+  name        = join("-", tolist([var.client, var.project, var.environment, "sg", each.value.service, each.value.application, each.value.functionality]))
   description = each.value.description
   vpc_id      = each.value.vpc_id
 

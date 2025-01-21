@@ -67,6 +67,7 @@ variable "sg_config" {
     - vpc_id: (optional, string) VPC ID. Defaults to the region's default VPC.
     - service: (string) AWS Service (ecs - alb - rds)
     - application: (string) Application name in order to name security group.
+    - functionality: (optional, string) Functionality name
     - ingres:
       - from_port: (string) Start port (or ICMP type number if protocol is icmp or icmpv6).
       - to_port: (string) End range port (or ICMP code if protocol is icmp).
