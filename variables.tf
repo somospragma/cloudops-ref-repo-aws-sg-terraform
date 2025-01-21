@@ -3,18 +3,18 @@
 ###########################################
 
 variable "environment" {
-  type = string
+  type        = string
   description = "Environment where resources will be deployed"
 }
 
 variable "client" {
-  type = string
+  type        = string
   description = "Client name"
 }
 
 variable "project" {
-  type = string  
-    description = "Project name"
+  type        = string
+  description = "Project name"
 }
 
 ###########################################
@@ -25,29 +25,31 @@ variable "sg_config" {
   type = list(object({
     description = string
     vpc_id      = string
+    service     = string
     application = string
     ingress = list(object({
-      from_port   = string
-      to_port     = string
-      protocol    = string
-      cidr_blocks = list(string)
+      from_port       = string
+      to_port         = string
+      protocol        = string
+      cidr_blocks     = list(string)
       prefix_list_ids = list(string)
       security_groups = list(string)
-      self = bool
-      description = string
+      self            = bool
+      description     = string
     }))
     egress = list(object({
-      from_port   = string
-      to_port     = string
-      protocol    = string
+      from_port       = string
+      to_port         = string
+      protocol        = string
       prefix_list_ids = list(string)
-      cidr_blocks = list(string)
-      description = string
+      cidr_blocks     = list(string)
+      description     = string
     }))
   }))
   description = <<EOF
     - description: (string) Security group description. Defaults to Managed by Terraform. Cannot be "". NOTE: This field maps to the AWS GroupDescription attribute, for which there is no Update API. If you'd like to classify your security groups in a way that can be updated, use tags.
     - vpc_id: (string) VPC ID. Defaults to the region's default VPC.
+    - service: (string) Service AWS (ecs - alb - rds)
     - application: (string) Application name in order to name security group.
     - ingress:
       - description: (string) Description of this ingress rule.

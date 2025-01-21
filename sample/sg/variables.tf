@@ -41,6 +41,7 @@ variable "sg_config" {
   type = list(object({
     description = string
     vpc_id      = string
+    service     = string
     application = string
     ingress = list(object({
       from_port   = string
@@ -64,6 +65,7 @@ variable "sg_config" {
   description = <<EOF
     - description: (optional, string) Security group description. Defaults to Managed by Terraform. Cannot be "". NOTE: This field maps to the AWS GroupDescription attribute, for which there is no Update API. If you'd like to classify your security groups in a way that can be updated, use tags.
     - vpc_id: (optional, string) VPC ID. Defaults to the region's default VPC.
+    - service: (string) Service AWS (ecs - alb - rds)
     - application: (string) Application name in order to name security group.
     - ingres:
       - from_port: (string) Start port (or ICMP type number if protocol is icmp or icmpv6).
