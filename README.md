@@ -2,11 +2,9 @@
 
 ## Descripción:
 
-Este módulo facilita la creación de un Security Group completo en AWS.
+Este módulo facilita la creación de un Security Group en AWS, el cual requiere de los siguientes recursos, los cuales debieron ser previamente creados:
 
-Este módulo de Terraform para un Security Group de AWS necesitará de los siguientes recursos previamente creados:
-
-- vpc_id: El ID de la VPC en la que se usará el punto final.
+- vpc_id: ID de la vpc.
 
 Consulta CHANGELOG.md para la lista de cambios de cada versión. *Recomendamos encarecidamente que en tu código fijes la versión exacta que estás utilizando para que tu infraestructura permanezca estable y actualices las versiones de manera sistemática para evitar sorpresas.*
 
@@ -16,7 +14,7 @@ El módulo cuenta con la siguiente estructura:
 
 ```bash
 cloudops-ref-repo-aws-vpc-endpoint-terraform/
-└── sample/
+└── sample/sg
     ├── data.tf
     ├── main.tf
     ├── outputs.tf
@@ -52,14 +50,14 @@ Consulta a continuación la fecha y los resultados de nuestro escaneo de segurid
 Este módulo requiere la configuración de un provider específico para el proyecto. Debe configurarse de la siguiente manera:
 
 ```hcl
-sample/vpc/providers.tf
+sample/sg/providers.tf
 provider "aws" {
   alias = "alias01"
   # ... otras configuraciones del provider
 }
 
-sample/vpc/main.tf
-module "vpc" {
+sample/sg/main.tf
+module "security_groups" {
   source = ""
   providers = {
     aws.project = aws.alias01
@@ -94,11 +92,11 @@ module "security_groups" {
     datatype      = "xxx"
   }
 
-  # VPC Endpoint configuration
+  # Security Group configuration
   sg_config = [
     {
         application = "sm"
-        description = "Security group for VPC Endpoint"
+        description = "Security group description"
         vpc_id      = module.vpc.vpc_id
         ingress = [
             {
