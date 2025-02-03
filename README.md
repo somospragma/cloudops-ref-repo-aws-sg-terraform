@@ -13,7 +13,7 @@ Consulta CHANGELOG.md para la lista de cambios de cada versión. *Recomendamos e
 El módulo cuenta con la siguiente estructura:
 
 ```bash
-cloudops-ref-repo-aws-vpc-endpoint-terraform/
+cloudops-ref-repo-aws-sg-terraform/
 └── sample/sg
     ├── data.tf
     ├── main.tf
