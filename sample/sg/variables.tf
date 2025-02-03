@@ -29,7 +29,7 @@ variable "client" {
 
 variable "project" {
   type = string  
-    description = "Project name"
+  description = "Project name"
 }
 
 
