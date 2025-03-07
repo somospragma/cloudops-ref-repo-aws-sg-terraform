@@ -13,14 +13,22 @@ resource "aws_security_group" "sg" {
   dynamic "ingress" {
     for_each = each.value.ingress
     content {
-      from_port       = ingress.value.from_port
-      to_port         = ingress.value.to_port
-      protocol        = ingress.value.protocol
-      cidr_blocks     = ingress.value.cidr_blocks
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+
       security_groups = [
-        for sg in ingress.value.security_groups : aws_security_group.sg[sg].id
-        if contains(keys(aws_security_group.sg), sg) # Solo incluir SGs creados en este módulo
+        for sg in ingress.value.security_groups :
+        (
+          contains(keys(aws_security_group.sg), sg) ? aws_security_group.sg[sg].id : (
+            can(regex("^sg-", sg)) ? sg : (
+              "INVALID_SG_REFERENCE"
+            )
+          )
+        )
       ]
+
       prefix_list_ids = ingress.value.prefix_list_ids
       self            = ingress.value.self
       description     = ingress.value.description
