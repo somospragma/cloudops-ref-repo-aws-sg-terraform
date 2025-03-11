@@ -20,16 +20,14 @@ variable "project" {
 ###########################################
 ####### Security Group variables ##########
 ###########################################
-
 variable "sg_config" {
+  description = "Configuración de Security Groups"
   type = map(object({
     description   = string
     vpc_id        = string
     service       = string
     application   = string
-    functionality = optional(string)
-
-    ingress = list(object({
+    ingress       = list(object({
       from_port       = number
       to_port         = number
       protocol        = string
@@ -39,15 +37,22 @@ variable "sg_config" {
       self            = bool
       description     = string
     }))
-
-    egress = list(object({
+    egress        = list(object({
       from_port       = number
       to_port         = number
       protocol        = string
-      prefix_list_ids = list(string)
       cidr_blocks     = list(string)
+      prefix_list_ids = list(string)
+      security_groups = list(string)
+      self            = bool
       description     = string
     }))
   }))
-  description = "Mapa de configuración de Security Groups"
+  
+  validation {
+    condition = alltrue([
+      for sg_key in keys(var.sg_config) : !startswith(sg_key, "sg-")
+    ])
+    error_message = "Las claves en sg_config no deben comenzar con 'sg-' para evitar confusiones con los IDs de security groups de AWS."
+  }
 }
