@@ -15,11 +15,21 @@ variable "environment" {
 variable "client" {
   type        = string
   description = "Client name"
+  
+  validation {
+    condition     = can(regex("^[a-z0-9-]+$", var.client))
+    error_message = "Client must contain only lowercase letters, numbers, and hyphens"
+  }
 }
 
 variable "project" {
   type        = string
   description = "Project name"
+  
+  validation {
+    condition     = can(regex("^[a-z0-9-]+$", var.project))
+    error_message = "Project must contain only lowercase letters, numbers, and hyphens"
+  }
 }
 
 ###########################################

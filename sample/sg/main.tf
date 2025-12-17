@@ -2,22 +2,30 @@
 ######### Security Groups module ###########
 ###########################################
 
+# PC-IAC-026: SOLO invocar módulo con local.* (nunca var.* directos)
+# PROHIBIDO: Contener bloques locals {} aquí
+
 module "security_groups" {
   source = "../../"
+  
   providers = {
-    aws.project = aws.alias01              # Write manually alias (the same alias name configured in providers.tf)
+    aws.project = aws.principal
   }
 
   # Common configuration
   client      = var.client
   project     = var.project
   environment = var.environment
-  additional_tags = {
-    cost-center = "cc-123"
-    owner       = "team-infra"
-  }
 
-  # SG configuration
+  # ✅ Consumir local transformado (PC-IAC-026)
+  # Los VPC IDs ya fueron inyectados en locals.tf
+  sg_config = local.sg_config_transformed
+}
+
+# Ejemplo de configuración original (ahora en terraform.tfvars)
+# Este bloque se mantiene como referencia pero la configuración real
+# debe estar en terraform.tfvars → locals.tf → module
+/*
   sg_config = {
     # ALB Security Group - Permite tráfico HTTP y HTTPS desde cualquier lugar
     "alb" = {
@@ -153,4 +161,4 @@ module "security_groups" {
       ]
     }
   }
-}
+*/

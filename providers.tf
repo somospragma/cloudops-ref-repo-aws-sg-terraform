@@ -1,13 +1,7 @@
 ###########################################
-#Version definition - Terraform - Providers
+######## Provider Configuration ###########
 ###########################################
 
-terraform {
-  required_providers {
-    aws = {
-      configuration_aliases = [aws.project]
-      source                = "hashicorp/aws"
-      version               = ">=4.31.0"
-    }
-  }
-}
+# El provider se inyecta desde el Root Module
+# Usar: providers = { aws.project = aws.alias_name }
+# PC-IAC-005: Provider Injection Pattern
