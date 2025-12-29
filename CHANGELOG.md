@@ -5,6 +5,19 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2024-12-29
+
+### 📚 Documentación
+- **IAM Permissions**: Agregada documentación completa de permisos IAM requeridos
+  - Nuevo directorio `iam-permissions/` con README detallado
+  - Política IAM mínima en formato JSON (`sg-deployment-policy.json`)
+  - Guía de troubleshooting y mejores prácticas
+- **README**: Actualizado con sección de permisos IAM
+
+### 🔧 Mejoras
+- Sin cambios en funcionalidad del módulo
+- Mejora en documentación para facilitar adopción
+
 ## [1.0.0] - 2024-12-29
 
 ### 🎉 First Official Release
