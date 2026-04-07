@@ -5,7 +5,7 @@
 locals {
   # Generar nombres estandarizados para los security groups
   sg_names = {
-    for k, v in var.sg_config : k => "${var.client}-${var.project}-${var.environment}-sg-${v.service}-${v.application}"
+    for k, v in var.sg_config : k => "${var.client}-${var.project}-${var.environment}-sg-${k}"
   }
   
   # Filtrar reglas de ingress para facilitar su procesamiento

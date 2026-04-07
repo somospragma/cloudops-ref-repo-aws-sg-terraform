@@ -40,8 +40,6 @@ variable "sg_config" {
   type = map(object({
     description     = string                      # Descripción del grupo de seguridad
     vpc_id          = string                      # ID de la VPC donde se creará el grupo de seguridad
-    service         = string                      # Servicio asociado (ej: alb, ecs, rds)
-    application     = string                      # Nombre de la aplicación
     additional_tags = optional(map(string), {})   # Etiquetas específicas para este grupo de seguridad
     ingress         = list(object({
       from_port       = number                    # Puerto de inicio para el rango
